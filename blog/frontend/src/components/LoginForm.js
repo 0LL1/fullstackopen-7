@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import PropTypes from 'prop-types'
-import loginService from '../services/login'
-import blogsService from '../services/blogs'
 import { useField } from '../hooks'
-import { login } from '../actions/user'
+import { login } from '../ducks/user'
 import { setNotification } from '../actions/notification'
 
 const LoginForm = ({ login }) => {
@@ -15,16 +12,7 @@ const LoginForm = ({ login }) => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({
-        username: username.value,
-        password: password.value
-      })
-
-      window.localStorage.setItem('user', JSON.stringify(user))
-
-      blogsService.setToken(user.token)
-
-      login(user)
+      login({ username: username.value, password: password.value })
     } catch (error) {
       setNotification(error.response.data.error, true)
       resetUsername()
@@ -53,11 +41,5 @@ const LoginForm = ({ login }) => {
     </>
   )
 }
-
-// LoginForm.propTypes = {
-//   handleLogin: PropTypes.func.isRequired,
-//   username: PropTypes.object.isRequired,
-//   password: PropTypes.object.isRequired
-// }
 
 export default connect(null, { login })(LoginForm)

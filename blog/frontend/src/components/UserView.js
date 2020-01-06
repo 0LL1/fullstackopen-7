@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
-import { logout } from '../actions/user'
+import { logout } from '../ducks/user'
 // import PropTypes from 'prop-types'
 
 const UserView = ({
@@ -20,17 +20,12 @@ const UserView = ({
     setBlogFormVisible(!blogFormVisible)
   }
 
-  const handleLogout = () => {
-    logout()
-    window.localStorage.removeItem('user')
-  }
-
   return (
     <>
       <h1>blogs</h1>
       <div>
         <span>{name} logged in</span>
-        <button onClick={handleLogout}>logout</button>
+        <button onClick={logout}>logout</button>
       </div>
       <br />
       {blogFormVisible ? (

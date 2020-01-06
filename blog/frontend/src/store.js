@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { notificationReducer } from './reducers/notification'
 import { blogsReducer } from './reducers/blogs'
-import { userReducer } from './reducers/user'
+import userReducer from './ducks/user'
 
 const reducer = combineReducers({
   notification: notificationReducer,

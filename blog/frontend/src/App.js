@@ -4,8 +4,7 @@ import LoginForm from './components/LoginForm'
 import UserView from './components/UserView'
 import Notification from './components/Notification'
 import blogsService from './services/blogs'
-import { setNotification } from './actions/notification'
-import { getBlogs, addBlog } from './actions/blogs'
+import { getBlogs } from './actions/blogs'
 
 const App = ({ user, getBlogs }) => {
   const [blogFormVisible, setBlogFormVisible] = useState(false)
@@ -35,6 +34,4 @@ const App = ({ user, getBlogs }) => {
 
 const mapStateToProps = ({ user }) => ({ user })
 
-export default connect(mapStateToProps, { setNotification, getBlogs, addBlog })(
-  App
-)
+export default connect(mapStateToProps, { getBlogs })(App)
