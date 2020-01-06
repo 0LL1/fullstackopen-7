@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useField } from '../hooks'
 import { login } from '../ducks/user'
-import { setNotification } from '../actions/notification'
+import { setNotification } from '../ducks/notification'
 
 const LoginForm = ({ login }) => {
   const { reset: resetUsername, ...username } = useField('text')

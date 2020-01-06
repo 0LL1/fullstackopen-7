@@ -2,31 +2,14 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import blogsService from '../services/blogs'
 import { removeBlog, likeBlog } from '../actions/blogs'
-import { setNotification } from '../actions/notification'
+import { setNotification } from '../ducks/notification'
 
-const Blog = ({ blog, user, removeBlog, likeBlog }) => {
+const Blog = ({ blog, user, removeBlog, likeBlog, setNotification }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const toggleDetails = () => {
     setShowDetails(!showDetails)
   }
-
-  // const like = async blog => {
-  //   try {
-  //     const newBlog = { ...blog, likes: likes + 1 }
-
-  //     const response = await blogsService.update(blog.id, newBlog)
-
-  //     setLikes(response.likes)
-
-  //     // trigger re-render of blogs so they are sorted correctly
-  //     const newBlogs = [...blogs.filter(e => e.id !== blog.id), newBlog]
-
-  //     setBlogs(newBlogs)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
   const handleRemove = async () => {
     if (window.confirm(`Remove ${blog.title}?`)) {
@@ -70,4 +53,8 @@ const Blog = ({ blog, user, removeBlog, likeBlog }) => {
 
 const mapStateToProps = ({ user }) => ({ user })
 
-export default connect(mapStateToProps, { removeBlog, likeBlog })(Blog)
+export default connect(mapStateToProps, {
+  removeBlog,
+  likeBlog,
+  setNotification
+})(Blog)

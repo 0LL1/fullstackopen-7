@@ -2,7 +2,7 @@ import React from 'react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
 import { addBlog } from '../actions/blogs'
-import { setNotification } from '../actions/notification'
+import { setNotification } from '../ducks/notification'
 import blogsService from '../services/blogs'
 
 const BlogForm = ({ setBlogFormVisible, user, addBlog, setNotification }) => {
