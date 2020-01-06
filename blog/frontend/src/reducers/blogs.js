@@ -1,4 +1,4 @@
-import { GET_BLOGS, ADD_BLOG, REMOVE_BLOG } from '../constants'
+import { GET_BLOGS, ADD_BLOG, REMOVE_BLOG, LIKE_BLOG } from '../constants'
 
 export const blogsReducer = (state = [], { type, ...payload }) => {
   switch (type) {
@@ -8,6 +8,10 @@ export const blogsReducer = (state = [], { type, ...payload }) => {
       return [...state, payload.newBlog]
     case REMOVE_BLOG:
       return state.filter(blog => blog.id !== payload.id)
+    case LIKE_BLOG:
+      return state.map(blog =>
+        blog.id === payload.newBlog.id ? payload.newBlog : blog
+      )
     default:
       return state
   }

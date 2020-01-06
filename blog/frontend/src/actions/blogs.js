@@ -1,4 +1,4 @@
-import { GET_BLOGS, ADD_BLOG, REMOVE_BLOG } from '../constants'
+import { GET_BLOGS, ADD_BLOG, REMOVE_BLOG, LIKE_BLOG } from '../constants'
 import blogsService from '../services/blogs'
 
 export const getBlogs = () => {
@@ -25,6 +25,15 @@ export const removeBlog = id => {
     dispatch({
       type: REMOVE_BLOG,
       id
+    })
+  }
+}
+
+export const likeBlog = newBlog => {
+  return async dispatch => {
+    dispatch({
+      type: LIKE_BLOG,
+      newBlog
     })
   }
 }
