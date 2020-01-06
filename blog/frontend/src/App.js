@@ -4,7 +4,7 @@ import LoginForm from './components/LoginForm'
 import UserView from './components/UserView'
 import Notification from './components/Notification'
 import blogsService from './services/blogs'
-import { getBlogs } from './actions/blogs'
+import { getBlogs } from './ducks/blogs'
 
 const App = ({ user, getBlogs }) => {
   const [blogFormVisible, setBlogFormVisible] = useState(false)

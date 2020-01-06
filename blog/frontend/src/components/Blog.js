@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import blogsService from '../services/blogs'
-import { removeBlog, likeBlog } from '../actions/blogs'
+import { removeBlog, likeBlog } from '../ducks/blogs'
 import { setNotification } from '../ducks/notification'
 
 const Blog = ({ blog, user, removeBlog, likeBlog, setNotification }) => {
@@ -13,17 +12,13 @@ const Blog = ({ blog, user, removeBlog, likeBlog, setNotification }) => {
 
   const handleRemove = async () => {
     if (window.confirm(`Remove ${blog.title}?`)) {
-      await blogsService.remove(blog.id)
-
-      setNotification(`'${blog.title}' removed`)
       removeBlog(blog.id)
+      setNotification(`'${blog.title}' removed`)
     }
   }
 
   const handleLike = async () => {
     const newBlog = { ...blog, likes: blog.likes + 1 }
-
-    await blogsService.update(blog.id, newBlog)
 
     likeBlog(newBlog)
   }

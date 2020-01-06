@@ -1,11 +1,10 @@
 import React from 'react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
-import { addBlog } from '../actions/blogs'
+import { addBlog } from '../ducks/blogs'
 import { setNotification } from '../ducks/notification'
-import blogsService from '../services/blogs'
 
-const BlogForm = ({ setBlogFormVisible, user, addBlog, setNotification }) => {
+const BlogForm = ({ setBlogFormVisible, addBlog, setNotification }) => {
   const { reset: resetTitle, ...title } = useField('text')
   const { reset: resetAuthor, ...author } = useField('text')
   const { reset: resetUrl, ...url } = useField('text')
@@ -14,11 +13,7 @@ const BlogForm = ({ setBlogFormVisible, user, addBlog, setNotification }) => {
     event.preventDefault()
 
     try {
-      const response = await blogsService.create(newBlog)
-      addBlog({
-        ...response,
-        user: { id: response.user.id, username: user.username, name: user.name }
-      })
+      addBlog(newBlog)
       setNotification(`'${title.value}' added`)
       resetTitle()
       resetAuthor()
@@ -66,6 +61,4 @@ const BlogForm = ({ setBlogFormVisible, user, addBlog, setNotification }) => {
   )
 }
 
-const mapStateToProps = ({ user }) => ({ user })
-
-export default connect(mapStateToProps, { addBlog, setNotification })(BlogForm)
+export default connect(null, { addBlog, setNotification })(BlogForm)
