@@ -1,36 +1,39 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import blogsService from '../services/blogs'
+import { removeBlog } from '../actions/blogs'
+import { setNotification } from '../actions/notification'
 
-const Blog = ({ blog, user, blogs, setBlogs }) => {
+const Blog = ({ blog, user, removeBlog }) => {
   const [showDetails, setShowDetails] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
 
   const toggleDetails = () => {
     setShowDetails(!showDetails)
   }
 
-  const like = async blog => {
-    try {
-      const newBlog = { ...blog, likes: likes + 1 }
+  // const like = async blog => {
+  //   try {
+  //     const newBlog = { ...blog, likes: likes + 1 }
 
-      const response = await blogsService.update(blog.id, newBlog)
+  //     const response = await blogsService.update(blog.id, newBlog)
 
-      setLikes(response.likes)
+  //     setLikes(response.likes)
 
-      // trigger re-render of blogs so they are sorted correctly
-      const newBlogs = [...blogs.filter(e => e.id !== blog.id), newBlog]
+  //     // trigger re-render of blogs so they are sorted correctly
+  //     const newBlogs = [...blogs.filter(e => e.id !== blog.id), newBlog]
 
-      setBlogs(newBlogs)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //     setBlogs(newBlogs)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  const remove = async blog => {
+  const handleRemove = async blog => {
     if (window.confirm(`Remove ${blog.title}?`)) {
       await blogsService.remove(blog.id)
 
-      setBlogs(blogs.filter(e => e.id !== blog.id))
+      setNotification(`'${blog.title}' removed`)
+      removeBlog(blog.id)
     }
   }
 
@@ -44,12 +47,12 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
           <br />
           <a href={blog.url}>{blog.url}</a>
           <p>
-            {likes} likes
-            <button onClick={() => like(blog)}>like</button>
+            {blog.likes} likes
+            {/* <button onClick={() => like(blog)}>like</button> */}
           </p>
           <p>Added by {blog.user.name}</p>
           {user.username === blog.user.username && (
-            <button onClick={() => remove(blog)}>remove</button>
+            <button onClick={() => handleRemove(blog)}>remove</button>
           )}
         </>
       )}
@@ -57,4 +60,6 @@ const Blog = ({ blog, user, blogs, setBlogs }) => {
   )
 }
 
-export default Blog
+const mapStateToProps = ({ user }) => ({ user })
+
+export default connect(mapStateToProps, { removeBlog })(Blog)

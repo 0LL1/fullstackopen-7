@@ -1,50 +1,63 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useField } from '../hooks'
+import { connect } from 'react-redux'
+import { addBlog } from '../actions/blogs'
+import { setNotification } from '../actions/notification'
+import blogsService from '../services/blogs'
 
-const BlogForm = ({
-  handleCreate,
-  title,
-  author,
-  url,
-  setTitle,
-  setAuthor,
-  setUrl
-}) => {
+const BlogForm = ({ setBlogFormVisible, user, addBlog, setNotification }) => {
+  const { reset: resetTitle, ...title } = useField('text')
+  const { reset: resetAuthor, ...author } = useField('text')
+  const { reset: resetUrl, ...url } = useField('text')
+
+  const handleCreate = async (event, newBlog) => {
+    event.preventDefault()
+
+    try {
+      const response = await blogsService.create(newBlog)
+      addBlog({
+        ...response,
+        user: { id: response.user.id, username: user.username, name: user.name }
+      })
+      setNotification(`'${title.value}' added`)
+      resetTitle()
+      resetAuthor()
+      resetUrl()
+      setBlogFormVisible(false)
+    } catch (error) {
+      setNotification(`adding '${title}' failed`, true)
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <h2>create new</h2>
-      <form onSubmit={event => handleCreate(event, { title, author, url })}>
+      <form
+        onSubmit={event =>
+          handleCreate(event, {
+            title: title.value,
+            author: author.value,
+            url: url.value
+          })
+        }
+      >
         <label>
           title
           <br />
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
+          <input {...title} />
         </label>
         <br />
         <label>
           author
           <br />
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
+          <input {...author} />
         </label>
         <br />
         <label>
           url
           <br />
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
+          <input {...url} />
         </label>
         <br />
         <button type="submit">create</button>
@@ -53,14 +66,6 @@ const BlogForm = ({
   )
 }
 
-BlogForm.propTypes = {
-  handleCreate: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
-  setAuthor: PropTypes.func.isRequired,
-  setUrl: PropTypes.func.isRequired
-}
+const mapStateToProps = ({ user }) => ({ user })
 
-export default BlogForm
+export default connect(mapStateToProps, { addBlog, setNotification })(BlogForm)

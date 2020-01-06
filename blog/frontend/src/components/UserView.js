@@ -1,38 +1,28 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
-import PropTypes from 'prop-types'
+import { logout } from '../actions/user'
+// import PropTypes from 'prop-types'
 
 const UserView = ({
   name,
   blogs,
   logout,
-  handleCreate,
-  title,
-  author,
-  url,
-  setTitle,
-  setAuthor,
-  setUrl,
   blogFormVisible,
-  setBlogFormVisible,
-  user,
-  setBlogs
+  setBlogFormVisible
 }) => {
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
 
-  const blogList = sortedBlogs.map(blog => (
-    <Blog
-      key={blog.id}
-      blog={blog}
-      user={user}
-      blogs={blogs}
-      setBlogs={setBlogs}
-    />
-  ))
+  const blogList = sortedBlogs.map(blog => <Blog key={blog.id} blog={blog} />)
 
   const toggleVisibility = () => {
     setBlogFormVisible(!blogFormVisible)
+  }
+
+  const handleLogout = () => {
+    logout()
+    window.localStorage.removeItem('user')
   }
 
   return (
@@ -40,20 +30,12 @@ const UserView = ({
       <h1>blogs</h1>
       <div>
         <span>{name} logged in</span>
-        <button onClick={logout}>logout</button>
+        <button onClick={handleLogout}>logout</button>
       </div>
       <br />
       {blogFormVisible ? (
         <div>
-          <BlogForm
-            handleCreate={handleCreate}
-            title={title}
-            author={author}
-            url={url}
-            setTitle={setTitle}
-            setAuthor={setAuthor}
-            setUrl={setUrl}
-          />
+          <BlogForm setBlogFormVisible={setBlogFormVisible} />
           <button onClick={toggleVisibility}>cancel</button>
         </div>
       ) : (
@@ -67,20 +49,15 @@ const UserView = ({
   )
 }
 
-UserView.propTypes = {
-  name: PropTypes.string.isRequired,
-  blogs: PropTypes.array.isRequired,
-  logout: PropTypes.func.isRequired,
-  handleCreate: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  setTitle: PropTypes.func.isRequired,
-  setAuthor: PropTypes.func.isRequired,
-  setUrl: PropTypes.func.isRequired,
-  blogFormVisible: PropTypes.bool.isRequired,
-  setBlogFormVisible: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
-}
+// UserView.propTypes = {
+//   name: PropTypes.string.isRequired,
+//   blogs: PropTypes.array.isRequired,
+//   logout: PropTypes.func.isRequired,
+//   blogFormVisible: PropTypes.bool.isRequired,
+//   setBlogFormVisible: PropTypes.func.isRequired,
+//   user: PropTypes.object.isRequired
+// }
 
-export default UserView
+const mapStateToProps = ({ blogs }) => ({ blogs })
+
+export default connect(mapStateToProps, { logout })(UserView)
