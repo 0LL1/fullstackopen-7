@@ -3,6 +3,7 @@ import { useField } from '../hooks'
 import { connect } from 'react-redux'
 import { addBlog } from '../ducks/blogs'
 import { setNotification } from '../ducks/notification'
+import blogsService from '../services/blogs'
 
 const BlogForm = ({ setBlogFormVisible, addBlog, setNotification }) => {
   const { reset: resetTitle, ...title } = useField('text')
@@ -13,14 +14,16 @@ const BlogForm = ({ setBlogFormVisible, addBlog, setNotification }) => {
     event.preventDefault()
 
     try {
-      addBlog(newBlog)
+      const blog = await blogsService.create(newBlog)
+      addBlog(blog)
       setNotification(`'${title.value}' added`)
+      setBlogFormVisible(false)
+    } catch (error) {
       resetTitle()
       resetAuthor()
       resetUrl()
-      setBlogFormVisible(false)
-    } catch (error) {
-      setNotification(`adding '${title}' failed`, true)
+      const name = title.value ? `'${title.value}'` : 'blog'
+      setNotification(`adding ${name} failed`, true)
       console.log(error)
     }
   }

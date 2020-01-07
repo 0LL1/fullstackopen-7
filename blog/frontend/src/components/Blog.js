@@ -19,7 +19,6 @@ const Blog = ({ blog, user, removeBlog, likeBlog, setNotification }) => {
 
   const handleLike = async () => {
     const newBlog = { ...blog, likes: blog.likes + 1 }
-
     likeBlog(newBlog)
   }
 

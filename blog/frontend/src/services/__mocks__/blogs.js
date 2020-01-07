@@ -1,4 +1,4 @@
-let token = null
+let token = null // eslint-disable-line no-unused-vars
 
 const setToken = newToken => {
   token = `bearer ${newToken}`

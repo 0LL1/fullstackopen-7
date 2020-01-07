@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import { useField } from '../hooks'
 import { login } from '../ducks/user'
 import { setNotification } from '../ducks/notification'
+import loginService from '../services/user'
+import blogsService from '../services/blogs'
 
-const LoginForm = ({ login }) => {
+const LoginForm = ({ login, setNotification }) => {
   const { reset: resetUsername, ...username } = useField('text')
   const { reset: resetPassword, ...password } = useField('password')
 
@@ -12,11 +14,18 @@ const LoginForm = ({ login }) => {
     event.preventDefault()
 
     try {
-      login({ username: username.value, password: password.value })
+      const user = await loginService.login({
+        username: username.value,
+        password: password.value
+      })
+      login(user)
+      window.localStorage.setItem('user', JSON.stringify(user))
+      blogsService.setToken(user.token)
     } catch (error) {
-      setNotification(error.response.data.error, true)
       resetUsername()
       resetPassword()
+      setNotification(error.response.data.error, true)
+      console.log(error)
     }
   }
 
@@ -42,4 +51,4 @@ const LoginForm = ({ login }) => {
   )
 }
 
-export default connect(null, { login })(LoginForm)
+export default connect(null, { login, setNotification })(LoginForm)

@@ -1,9 +1,11 @@
-import loginService from '../services/user'
-import blogsService from '../services/blogs'
-
 // actions
 const LOGIN = 'user/login'
 const LOGOUT = 'user/logout'
+
+// action creators
+export function login(user) {
+  return { type: LOGIN, payload: user }
+}
 
 // reducer
 export default function reducer(
@@ -21,17 +23,14 @@ export default function reducer(
 }
 
 // thunks
-export function login({ username, password }) {
-  return async dispatch => {
-    const user = await loginService.login({ username, password })
-    window.localStorage.setItem('user', JSON.stringify(user))
-    blogsService.setToken(user.token)
-    dispatch({
-      type: LOGIN,
-      payload: user
-    })
-  }
-}
+// export function login(user) {
+//   return async dispatch => {
+//     dispatch({
+//       type: LOGIN,
+//       payload: user
+//     })
+//   }
+// }
 
 export function logout() {
   window.localStorage.removeItem('user')

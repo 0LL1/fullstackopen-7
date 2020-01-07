@@ -22,6 +22,11 @@ export default function reducer(state = [], { type, payload }) {
   }
 }
 
+// action creators
+export function addBlog(newBlog) {
+  return { type: ADD_BLOG, payload: newBlog }
+}
+
 // thunks
 export function getBlogs() {
   return async dispatch => {
@@ -29,16 +34,6 @@ export function getBlogs() {
     dispatch({
       type: GET_BLOGS,
       payload: blogs
-    })
-  }
-}
-
-export function addBlog(newBlog) {
-  return async dispatch => {
-    const blog = await blogsService.create(newBlog)
-    dispatch({
-      type: ADD_BLOG,
-      payload: blog
     })
   }
 }
