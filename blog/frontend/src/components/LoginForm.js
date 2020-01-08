@@ -36,13 +36,13 @@ const LoginForm = ({ login, setNotification }) => {
         <label>
           username
           <br />
-          <input {...username} />
+          <input {...username} data-cy="username" />
         </label>
         <br />
         <label>
           password
           <br />
-          <input {...password} />
+          <input {...password} data-cy="password" />
         </label>
         <br />
         <button type="submit">login</button>

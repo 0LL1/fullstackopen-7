@@ -43,22 +43,24 @@ const BlogForm = ({ setBlogFormVisible, addBlog, setNotification }) => {
         <label>
           title
           <br />
-          <input {...title} />
+          <input {...title} data-cy="title" />
         </label>
         <br />
         <label>
           author
           <br />
-          <input {...author} />
+          <input {...author} data-cy="author" />
         </label>
         <br />
         <label>
           url
           <br />
-          <input {...url} />
+          <input {...url} data-cy="url" />
         </label>
         <br />
-        <button type="submit">create</button>
+        <button type="submit" data-cy="create">
+          create
+        </button>
       </form>
     </div>
   )

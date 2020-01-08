@@ -32,12 +32,16 @@ const Blog = ({ blog, user, removeBlog, likeBlog, setNotification }) => {
           <br />
           <a href={blog.url}>{blog.url}</a>
           <p>
-            {blog.likes} likes
-            <button onClick={handleLike}>like</button>
+            {blog.likes} {blog.likes === 1 ? 'like' : 'likes'}
+            <button onClick={handleLike} data-cy="like">
+              like
+            </button>
           </p>
           <p>Added by {blog.user.name}</p>
           {user.username === blog.user.username && (
-            <button onClick={handleRemove}>remove</button>
+            <button onClick={handleRemove} data-cy="remove">
+              remove
+            </button>
           )}
         </>
       )}

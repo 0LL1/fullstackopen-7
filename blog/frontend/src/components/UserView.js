@@ -44,15 +44,6 @@ const UserView = ({
   )
 }
 
-// UserView.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   blogs: PropTypes.array.isRequired,
-//   logout: PropTypes.func.isRequired,
-//   blogFormVisible: PropTypes.bool.isRequired,
-//   setBlogFormVisible: PropTypes.func.isRequired,
-//   user: PropTypes.object.isRequired
-// }
-
 const mapStateToProps = ({ blogs }) => ({ blogs })
 
 export default connect(mapStateToProps, { logout })(UserView)
