@@ -1,15 +1,13 @@
 module.exports = {
   env: {
+    node: true,
     browser: true,
     es2020: true,
     'jest/globals': true
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: ['eslint:recommended'],
   parserOptions: {
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    }
+    sourceType: 'module'
   },
   plugins: ['react', 'jest'],
   rules: {
