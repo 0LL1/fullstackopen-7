@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import Notification from './components/Notification'
+import Header from './components/Header'
 import LoginForm from './components/LoginForm'
 import MainView from './components/MainView'
 import Users from './components/Users'
@@ -21,6 +23,8 @@ const App = ({ user, getBlogs }) => {
 
   return (
     <BrowserRouter>
+      <Notification />
+      <Header />
       <Switch>
         <Route exact path="/">
           {user ? (

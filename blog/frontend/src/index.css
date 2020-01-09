@@ -23,6 +23,15 @@ a:hover {
   text-decoration: underline;
 }
 
+th {
+  font-size: larger;
+  padding: 1rem;
+}
+
+td {
+  padding: 0.5rem;
+}
+
 .success {
   position: absolute;
   top: -0.5rem;
@@ -66,4 +75,9 @@ a:hover {
 .right-link {
   text-align: right;
   color: #000;
+}
+
+.users-table {
+  width: 100%;
+  text-align: center;
 }

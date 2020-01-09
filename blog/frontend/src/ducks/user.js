@@ -2,11 +2,6 @@
 const LOGIN = 'user/login'
 const LOGOUT = 'user/logout'
 
-// action creators
-export function login(user) {
-  return { type: LOGIN, payload: user }
-}
-
 // reducer
 export default function reducer(
   state = JSON.parse(window.localStorage.getItem('user')) || null,
@@ -22,16 +17,12 @@ export default function reducer(
   }
 }
 
-// thunks
-// export function login(user) {
-//   return async dispatch => {
-//     dispatch({
-//       type: LOGIN,
-//       payload: user
-//     })
-//   }
-// }
+// action creators
+export function login(user) {
+  return { type: LOGIN, payload: user }
+}
 
+// thunks
 export function logout() {
   window.localStorage.removeItem('user')
   return async dispatch => {
