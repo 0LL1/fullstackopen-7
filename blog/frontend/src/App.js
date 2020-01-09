@@ -9,13 +9,18 @@ import Users from './components/Users'
 import User from './components/User'
 import blogsService from './services/blogs'
 import { getBlogs } from './ducks/blogs'
+import { getUsers } from './ducks/users'
 
-const App = ({ user, getBlogs }) => {
+const App = ({ user, getBlogs, getUsers }) => {
   const [blogFormVisible, setBlogFormVisible] = useState(false)
 
   useEffect(() => {
     getBlogs()
   }, [getBlogs])
+
+  useEffect(() => {
+    getUsers()
+  }, [getUsers])
 
   useEffect(() => {
     user && blogsService.setToken(user.token)
@@ -24,17 +29,14 @@ const App = ({ user, getBlogs }) => {
   return (
     <BrowserRouter>
       <Notification />
-      <Header />
+      {user ? <Header /> : <LoginForm />}
       <Switch>
+        {!user && <Redirect to="/login" />}
         <Route exact path="/">
-          {user ? (
-            <MainView
-              blogFormVisible={blogFormVisible}
-              setBlogFormVisible={setBlogFormVisible}
-            />
-          ) : (
-            <Redirect to="/login" />
-          )}
+          <MainView
+            blogFormVisible={blogFormVisible}
+            setBlogFormVisible={setBlogFormVisible}
+          />
         </Route>
         <Route exact path="/login">
           <LoginForm />
@@ -53,4 +55,4 @@ const App = ({ user, getBlogs }) => {
 
 const mapStateToProps = ({ user }) => ({ user })
 
-export default connect(mapStateToProps, { getBlogs })(App)
+export default connect(mapStateToProps, { getBlogs, getUsers })(App)

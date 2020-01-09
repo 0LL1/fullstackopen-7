@@ -5,14 +5,13 @@ import { logout } from '../ducks/user'
 
 const Header = ({ user, logout }) => {
   const { pathname } = useLocation()
-  console.log('TCL: Header -> location', pathname)
 
   return (
     <div>
       <h1>blogs</h1>
       <div className="users">
         <div>
-          <span>{user.name} logged in</span>
+          <span>{user?.name} logged in</span>
           <button onClick={logout}>logout</button>
         </div>
         {pathname === '/' ? (

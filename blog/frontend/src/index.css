@@ -32,6 +32,10 @@ td {
   padding: 0.5rem;
 }
 
+li {
+  padding: 0.5rem;
+}
+
 .success {
   position: absolute;
   top: -0.5rem;

@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { getUsers } from '../ducks/users'
+import { Link } from 'react-router-dom'
 
-const Users = ({ users, getUsers }) => {
-  useEffect(() => {
-    getUsers()
-  }, [getUsers])
-
+const Users = ({ users }) => {
   const userRows = users.map(user => {
     return (
       <tr key={user.username}>
-        <td>{user.name}</td>
+        <td>
+          <Link to={`/users/${user.id}`}>{user.name}</Link>
+        </td>
         <td>{user.blogs.length}</td>
       </tr>
     )
@@ -34,4 +32,4 @@ const Users = ({ users, getUsers }) => {
 
 const mapStateToProps = ({ users }) => ({ users })
 
-export default connect(mapStateToProps, { getUsers })(Users)
+export default connect(mapStateToProps, null)(Users)
