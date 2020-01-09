@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Blog from './Blog'
 import BlogForm from './BlogForm'
+import Notification from './Notification'
 import { logout } from '../ducks/user'
-// import PropTypes from 'prop-types'
 
-const UserView = ({
+const MainView = ({
   name,
   blogs,
   logout,
@@ -22,10 +23,16 @@ const UserView = ({
 
   return (
     <>
+      <Notification />
       <h1>blogs</h1>
-      <div>
-        <span>{name} logged in</span>
-        <button onClick={logout}>logout</button>
+      <div className="users">
+        <div>
+          <span>{name} logged in</span>
+          <button onClick={logout}>logout</button>
+        </div>
+        <Link to="/users" className="right-link">
+          users
+        </Link>
       </div>
       <br />
       {blogFormVisible ? (
@@ -46,4 +53,4 @@ const UserView = ({
 
 const mapStateToProps = ({ blogs }) => ({ blogs })
 
-export default connect(mapStateToProps, { logout })(UserView)
+export default connect(mapStateToProps, { logout })(MainView)

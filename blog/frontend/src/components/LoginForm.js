@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { useField } from '../hooks'
 import { login } from '../ducks/user'
 import { setNotification } from '../ducks/notification'
@@ -9,6 +10,7 @@ import blogsService from '../services/blogs'
 const LoginForm = ({ login, setNotification }) => {
   const { reset: resetUsername, ...username } = useField('text')
   const { reset: resetPassword, ...password } = useField('password')
+  const history = useHistory()
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -21,6 +23,7 @@ const LoginForm = ({ login, setNotification }) => {
       login(user)
       window.localStorage.setItem('user', JSON.stringify(user))
       blogsService.setToken(user.token)
+      history.push('/')
     } catch (error) {
       resetUsername()
       resetPassword()

@@ -5,7 +5,7 @@ import BlogForm from './BlogForm'
 import { logout } from '../ducks/user'
 // import PropTypes from 'prop-types'
 
-const UserView = ({
+const MainView = ({
   name,
   blogs,
   logout,
@@ -44,7 +44,7 @@ const UserView = ({
   )
 }
 
-// UserView.propTypes = {
+// MainView.propTypes = {
 //   name: PropTypes.string.isRequired,
 //   blogs: PropTypes.array.isRequired,
 //   logout: PropTypes.func.isRequired,
@@ -55,4 +55,4 @@ const UserView = ({
 
 const mapStateToProps = ({ blogs }) => ({ blogs })
 
-export default connect(mapStateToProps, { logout })(UserView)
+export default connect(mapStateToProps, { logout })(MainView)
